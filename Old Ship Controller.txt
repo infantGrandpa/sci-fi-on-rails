@@ -1,0 +1,83 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShipController1 : MonoBehaviour
+{
+    public float maxForwardVelocity = 50, maxForwardAcceleration = 10, acceleration = 0.5f, maxForwardSpeed = 50, minForwardSpeed = 2;
+    private float currentForwardAcceleration;
+
+
+
+    private Rigidbody myRigidbody;
+
+
+    public float forwardSpeed = 25f, strafeSpeed = 7.5f, hoverSpeed = 5f;
+    private float activeForwardSpeed, activeStrafeSpeed, activeHoverSpeed;
+    private float forwardAcceleration = 2.5f, strafeAcceleration = 2f, hoverAcceleration = 2f;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+        currentForwardAcceleration = 0;
+        myRigidbody = GetComponent<Rigidbody>();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+
+
+        //Add force
+
+
+
+
+        //currentForwardAcceleration = Mathf.Clamp(currentForwardAcceleration + Input.GetAxis("Vertical") * acceleration, -maxForwardAcceleration, maxForwardAcceleration);       //Get current acceleration value
+        //float targetForwardVelocity = Mathf.Clamp(myRigidbody.velocity.z + currentForwardAcceleration * Time.deltaTime, -maxForwardVelocity, maxForwardVelocity);               //Get target velocity - add acceleration to current velocity, and then clamp
+        //float actualForwardAccleration = (targetForwardVelocity - myRigidbody.velocity.z) / Time.deltaTime;                                                                         //Set acceleration to get us to the proper velocity
+        //Debug.Log(actualForwardAccleration.ToString() + " = (" + targetForwardVelocity.ToString() + " - " + myRigidbody.velocity.z.ToString() + ") / " + Time.deltaTime.ToString());
+        //
+
+        
+
+        
+
+        /*
+        currentForwardAcceleration = Mathf.Clamp(Input.GetAxis("Vertical") * acceleration, -maxForwardAcceleration, maxForwardAcceleration);
+        float currentForwardVelocity = myRigidbody.velocity.z;
+        float targetForwardVelocity = Mathf.Clamp(currentForwardVelocity + currentForwardAcceleration, -maxForwardVelocity, maxForwardVelocity);
+        currentForwardAcceleration = Mathf.Lerp(currentForwardVelocity, )
+
+        //transform.Rotate(-mouseDistance.y * lookRateSpeed * Time.deltaTime, mouseDistance.x * lookRateSpeed * Time.deltaTime, rollInput * rollSpeed * Time.deltaTime, Space.Self);
+
+        activeForwardSpeed = Mathf.Lerp(activeForwardSpeed, Input.GetAxisRaw("Vertical") * forwardSpeed, forwardAcceleration * Time.deltaTime);
+        activeStrafeSpeed = Mathf.Lerp(activeStrafeSpeed, Input.GetAxisRaw("Horizontal") * strafeSpeed, strafeAcceleration * Time.deltaTime);
+        activeHoverSpeed = Mathf.Lerp(activeHoverSpeed, Input.GetAxisRaw("Hover") * hoverSpeed, hoverAcceleration * Time.deltaTime);
+
+        transform.position += activeForwardSpeed * Time.deltaTime * transform.forward;
+        transform.position += activeStrafeSpeed * Time.deltaTime * transform.right;
+        transform.position += activeHoverSpeed * Time.deltaTime * transform.up;
+        */
+    }
+
+    private void FixedUpdate()
+    {
+        //Get acceleration value
+        currentForwardAcceleration = Mathf.Clamp(currentForwardAcceleration + Input.GetAxis("Vertical") * acceleration, -maxForwardAcceleration, maxForwardAcceleration);       //Get current acceleration value
+        //float targetForwardVelocity = myRigidbody.velocity.z + currentForwardAcceleration * Time.deltaTime;               //Get target velocity - add acceleration to current velocity, and then clamp
+        //float actualForwardAccleration = (targetForwardVelocity - myRigidbody.velocity.z) / Time.deltaTime;                                                                         //Set acceleration to get us to the proper velocity
+        Vector3 forceToAdd = new Vector3(0, 0, currentForwardAcceleration);
+        myRigidbody.AddForce(forceToAdd, ForceMode.Force);
+        myRigidbody.velocity = myRigidbody.velocity.normalized * maxForwardSpeed;
+        Debug.Log(forceToAdd);
+
+        References.theAccelerationBar.ShowAccelerationFraction(currentForwardAcceleration / maxForwardAcceleration);
+
+        //Debug.Log("Acceleration: " + actualForwardAccleration.ToString() + " Velocity: " + targetForwardVelocity.ToString());
+    }
+}

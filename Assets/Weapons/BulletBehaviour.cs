@@ -7,8 +7,10 @@ public class BulletBehaviour : MonoBehaviour
     public float bulletSpeed;
     public float secondsToExist;
     public float damage;
+    public AudioSource myAudioSource;
 
     private float secondsLeftBeforeDestroyed;
+
 
     private void Start()
     {
@@ -27,10 +29,10 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject theirGameObject = collision.gameObject;
-        HealthSystem theirHealthSystem = theirGameObject.GetComponent<HealthSystem>();
+        GameObject theirGameObject = other.gameObject;
+        HealthSystem theirHealthSystem = theirGameObject.GetComponentInParent<HealthSystem>();
         if (theirHealthSystem != null)
         {
             theirHealthSystem.TakeDamage(damage);

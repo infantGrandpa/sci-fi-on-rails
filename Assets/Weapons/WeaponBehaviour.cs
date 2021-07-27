@@ -6,13 +6,14 @@ public class WeaponBehaviour : MonoBehaviour
 {
 
     public GameObject bulletPrefab;
+    public GameObject myBulletSource;
     public float secondsBetweenShots;
     private float secondsSinceLastShot;
     public float accuracy;
 
     private void Start()
     {
-        secondsSinceLastShot = 0;
+        secondsSinceLastShot = secondsBetweenShots;
     }
 
     private void Update()
@@ -24,7 +25,7 @@ public class WeaponBehaviour : MonoBehaviour
     {
         if (secondsSinceLastShot >= secondsBetweenShots)
         {
-            GameObject newBullet = Instantiate(bulletPrefab, transform.position + transform.forward, transform.rotation);
+            GameObject newBullet = Instantiate(bulletPrefab, myBulletSource.transform.position + myBulletSource.transform.forward, transform.rotation);
 
             //Change target based on accuracy value
             Vector3 inaccurateTargetPosition = targetPosition;
@@ -33,7 +34,7 @@ public class WeaponBehaviour : MonoBehaviour
             //inaccurateTargetPosition.z += Random.Range(-inaccuracy, inaccuracy);
             //Send bullet towards new target
             newBullet.transform.LookAt(inaccurateTargetPosition);
-            secondsSinceLastShot = secondsBetweenShots;
+            secondsSinceLastShot = 0;
         }
     }
 

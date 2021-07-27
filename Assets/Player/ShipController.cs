@@ -62,6 +62,10 @@ public class ShipController : MonoBehaviour
     //Controls: w: up, s: down, a: left, d: right, shift: speed up, ctrl: slow down
 
     private bool invertHorizontal, invertVertical;
+    private HealthSystem myHealthSystem;
+    private CinemachineImpulseSource myImpulseSource;
+
+
 
     private void OnEnable()
     {
@@ -76,6 +80,10 @@ public class ShipController : MonoBehaviour
         boostNoise.volume = 0;
         invertVertical = References.theGameController.PrefsGetBool("invertVertical");
         invertHorizontal = References.theGameController.PrefsGetBool("invertHorizontal");
+
+        
+        myHealthSystem = GetComponent<HealthSystem>();
+        myImpulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     private void Update()
@@ -85,7 +93,6 @@ public class ShipController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal") * (invertHorizontal ? -1 : 1);
         float speedInput = Input.GetAxis("Speed");
         
-        SetTargetLocation();
         LocalMove(horizontalInput, verticalInput, xySpeed);
         SetLookRotation(horizontalInput, verticalInput, lookSpeed);
         HorizontalLean(References.thePlayer.transform, horizontalInput, 80, .1f);
@@ -117,9 +124,22 @@ public class ShipController : MonoBehaviour
 
     }
 
-    private void SetTargetLocation()
+    private void OnTriggerEnter(Collider other)
     {
-        myAimTarget.localPosition = new Vector3(0, 0, aimTargetDistance);
+
+        //When crashing into a wall
+        GameObject theirGameObject = other.gameObject;
+        if (theirGameObject.CompareTag(References.wallsTag))
+        {
+            bool damageDealt = myHealthSystem.TakeDamage(1);
+            if (damageDealt) 
+            {
+                Debug.Log("Ship Crashed");
+                //Shake screen
+                myImpulseSource.GenerateImpulse();
+            }
+            
+        }
     }
 
     private void SetLookRotation(float h, float v, float speed)

@@ -9,6 +9,52 @@ public class GameController : MonoBehaviour
         References.theGameController = this;
     }
 
+    private void Start()
+    {
+        SetWallsToTrigger();
+    }
+
+    private void SetWallsToTrigger()
+    {
+        //Sets all walls and props to be triggers - this is so there is no actual collision
+        GameObject[] gameObjectList = GameObject.FindGameObjectsWithTag(References.wallsTag); //will return an array of all GameObjects in the scene
+        foreach (GameObject thisGameObject in gameObjectList) {        
+            //Check if Mesh (to set as convex)
+            MeshCollider thisMeshCollider = thisGameObject.GetComponent<MeshCollider>();
+            if (thisMeshCollider != null)
+            {
+                thisMeshCollider.convex = true;
+                thisMeshCollider.isTrigger = true;
+            } else
+            {
+                //Check if it has any other collider
+                Collider thisCollider = thisGameObject.GetComponent<Collider>();
+                if (thisCollider != null)
+                {
+                    thisCollider.isTrigger = true;
+                }
+            }
+        }
+    }
+    
+
+
+    //private void FindGameObjectsWithLayer(layer : int) : GameObject[] {
+    //    var goArray = FindObjectsOfType(GameObject);
+    //var goList = new System.Collections.Generic.List.< GameObject > ();
+    //    for (var i = 0; i<goArray.Length; i++) {
+    //        if (goArray[i].layer == layer) {
+    //            goList.Add(goArray[i]);
+    //        }
+    //    }
+    //    if (goList.Count == 0)
+    //{
+    //return null;
+    //}
+    //return goList.ToArray();
+    //} 
+
+
     public void PrefsSetBool(string keyName, bool value)
     {
         PlayerPrefs.SetInt(keyName, value ? 1 : 0);

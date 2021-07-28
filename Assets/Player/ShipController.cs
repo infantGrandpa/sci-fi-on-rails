@@ -30,9 +30,11 @@ public class ShipController : MonoBehaviour
     [Space]
 
     [Header("Weapons")]
-    public WeaponBehaviour myWeapon;
+    public WeaponBehaviour myPrimaryWeapon;
+    public WeaponBehaviour mySecondaryWeapon;
     public Transform myAimTarget;
     public float aimTargetDistance;
+    public List<WeaponBehaviour> weaponList = new List<WeaponBehaviour>();
 
 
     [Space]
@@ -97,10 +99,19 @@ public class ShipController : MonoBehaviour
         SetLookRotation(horizontalInput, verticalInput, lookSpeed);
         HorizontalLean(References.thePlayer.transform, horizontalInput, 80, .1f);
 
-
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
-            myWeapon.Fire(myAimTarget.position);
+            myPrimaryWeapon.ChargeAndFire(myAimTarget.position, true);
+        }
+        
+        //Charged Shot
+        if (Input.GetButton("Fire2"))
+        {
+            mySecondaryWeapon.ChargeAndFire(myAimTarget.position, false);
+        }
+        if (Input.GetButtonUp("Fire2"))
+        {
+            mySecondaryWeapon.ChargeAndFire(myAimTarget.position, true);
         }
 
 
@@ -246,8 +257,34 @@ public class ShipController : MonoBehaviour
         SetCameraZoom(zoom, brakeZoomTweenDuration);
     }
 
-    //Camera Effects
-    void SetCameraZoom(float zoom, float duration)
+    public GameObject GetClosestEnemyToAimTarget()
+    {
+        {
+            GameObject[] gos;
+            gos = GameObject.FindGameObjectsWithTag("Enemy");
+            GameObject closest = null;
+            float distance = Mathf.Infinity;
+            Vector3 position = myAimTarget.transform.position;
+            foreach (GameObject go in gos)
+            {
+                Vector3 diff = go.transform.position - position;
+                float curDistance = diff.sqrMagnitude;
+                if (curDistance < distance)
+                {
+                    closest = go;
+                    distance = curDistance;
+                }
+            }
+            return closest;
+        }
+    }
+
+
+
+
+
+        //Camera Effects
+        void SetCameraZoom(float zoom, float duration)
     {
         myCameraHolder.DOLocalMove(new Vector3(0, 0, zoom), duration);
     }

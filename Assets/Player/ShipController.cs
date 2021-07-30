@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,11 @@ public class ShipController : MonoBehaviour
     public float aimTargetDistance;
     public List<WeaponBehaviour> weaponList = new List<WeaponBehaviour>();
 
+    [Header("Shield")]
+    public float baseRechargeSpeed;
+    public float maxRegularShield;
+    public float overchargeValue;
+    private float currentShieldValue;
 
     [Space]
 
@@ -86,6 +92,8 @@ public class ShipController : MonoBehaviour
         
         myHealthSystem = GetComponent<HealthSystem>();
         myImpulseSource = GetComponent<CinemachineImpulseSource>();
+
+        currentShieldValue = 0;
     }
 
     private void Update()
@@ -99,19 +107,24 @@ public class ShipController : MonoBehaviour
         SetLookRotation(horizontalInput, verticalInput, lookSpeed);
         HorizontalLean(References.thePlayer.transform, horizontalInput, 80, .1f);
 
-        if (Input.GetButton("Fire1"))
-        {
-            myPrimaryWeapon.ChargeAndFire(myAimTarget.position, true);
-        }
-        
+
         //Charged Shot
         if (Input.GetButton("Fire2"))
         {
             mySecondaryWeapon.ChargeAndFire(myAimTarget.position, false);
-        }
-        if (Input.GetButtonUp("Fire2"))
+        } else if (Input.GetButtonUp("Fire2"))
         {
             mySecondaryWeapon.ChargeAndFire(myAimTarget.position, true);
+        } 
+        //Normal Shot
+        else if (Input.GetButton("Fire1"))
+        {
+            myPrimaryWeapon.ChargeAndFire(myAimTarget.position, true);
+        }
+        //Charge Shield
+        else if (Input.GetButton("Jump"))
+        {
+            ChargeShield();
         }
 
 
@@ -131,8 +144,20 @@ public class ShipController : MonoBehaviour
         Brake(brakeValue);
         Boost(boostValue);
 
-        
 
+        References.theCanvas.ShowShieldFraction(currentShieldValue / maxRegularShield);
+
+
+    }
+
+    private void ChargeShield()
+    {
+        currentShieldValue += baseRechargeSpeed * Time.deltaTime;
+        Debug.Log(currentShieldValue);
+        if (currentShieldValue > overchargeValue)
+        {
+            currentShieldValue = 0;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -50,17 +50,18 @@ public class WeaponBehaviour : MonoBehaviour
             //Debug.Log(secsCharging);
             if (isHoming)
             {
-                ////Can currently be only done on the player
+                //Can currently be only done on the player
                 closestEnemy = References.thePlayer.GetClosestEnemyToAimTarget();
-                //Vector3 dir = (References.thePlayer.transform.position - closestEnemy.transform.position).normalized;
-                //myHomingReticule.transform.rotation = dir;
-
-                //myHomingReticule.SetActive(true);
+                References.theCanvas.HoneInOnTarget(closestEnemy, secsCharging / secsToCharge);
             }
 
             //I've we've been told to fire
             if (fireNow)
             {
+                if (isHoming)
+                {
+                    References.theCanvas.StopHone();
+                }
                 //If we're fully charged, fire
                 if (secsCharging >= secsToCharge)
                 {

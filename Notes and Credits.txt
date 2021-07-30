@@ -3,7 +3,7 @@ Flying Controls in Unity - Tutorial: gamesplusjames (not currently used)
 Star Fox's Rail Movement | Mix and Jam on YouTube
 https://www.youtube.com/watch?v=JVbr7osMYTo&ab_channel=MixandJam
 
-Assets: Synty Store
+3D Assets: Synty Store
 
 Animation Code
 DOTween
@@ -11,3 +11,5 @@ DOTween
 Audio Fade
 https://gamedevbeginner.com/how-to-fade-audio-in-unity-i-tested-every-method-this-ones-the-best/#second_method
 
+Crosshair
+Max Marrone

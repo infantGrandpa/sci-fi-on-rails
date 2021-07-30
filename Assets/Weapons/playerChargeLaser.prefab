@@ -48,7 +48,7 @@ MonoBehaviour:
   secondsBetweenShots: 0.1
   accuracy: 10
   isChargable: 1
-  secsToCharge: 0.1
+  secsToCharge: 1
   isHoming: 1
   homingDistanceZ: 0
   homingDistancyXY: 0

@@ -2,50 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehaviour : MonoBehaviour
+namespace Player
 {
-
-    public float rotationSpeed, speed, acceleration, maxSpeed, minSpeed;
-
-    private float verticalMovement, horizontalMovement, targetSpeed, actualSpeed;
-    private Rigidbody myRigidbody;
-
-    private void Start()
+    public class PlayerBehaviour : MonoBehaviour
     {
-        myRigidbody = GetComponent<Rigidbody>();
-    }
 
-    private void FixedUpdate()
-    {
-        verticalMovement = Input.GetAxis("Vertical");
-        horizontalMovement = Input.GetAxis("Horizontal");
+        public float rotationSpeed, speed, acceleration, maxSpeed, minSpeed;
 
-        targetSpeed = actualSpeed + (acceleration * verticalMovement * Time.deltaTime);
-        References.theAccelerationBar.ShowAccelerationFraction(targetSpeed / maxSpeed);
-        //transform.Rotate(transform.up, rotationSpeed * horizontalMovement * Time.fixedDeltaTime);
-        //transform.Rotate(horizontalMovement * rotationSpeed * Time.fixedDeltaTime * transform.up);
+        private float verticalMovement, horizontalMovement, targetSpeed, actualSpeed;
+        private Rigidbody myRigidbody;
 
-        actualSpeed = Mathf.Clamp(targetSpeed, minSpeed, maxSpeed);
-        myRigidbody.velocity = actualSpeed * transform.forward;
+        private void Start()
+        {
+            myRigidbody = GetComponent<Rigidbody>();
+        }
 
-        ////WASD to move
-        //Vector3 inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        //myRigidbody.velocity = inputVector * speed;
+        private void FixedUpdate()
+        {
+            verticalMovement = Input.GetAxis("Vertical");
+            horizontalMovement = Input.GetAxis("Horizontal");
 
-        //Ray rayFromCameraToCursor = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Plane playerPlane = new Plane(Vector3.up, transform.position);
-        //playerPlane.Raycast(rayFromCameraToCursor, out float distanceFromCamera);
-        //Vector3 cursorPosition = rayFromCameraToCursor.GetPoint(distanceFromCamera);
+            targetSpeed = actualSpeed + (acceleration * verticalMovement * Time.deltaTime);
+            References.theAccelerationBar.ShowAccelerationFraction(targetSpeed / maxSpeed);
+            //transform.Rotate(transform.up, rotationSpeed * horizontalMovement * Time.fixedDeltaTime);
+            //transform.Rotate(horizontalMovement * rotationSpeed * Time.fixedDeltaTime * transform.up);
 
-        ////Face the new position
-        //Vector3 lookAtPosition = cursorPosition;
-        //transform.LookAt(lookAtPosition);
+            actualSpeed = Mathf.Clamp(targetSpeed, minSpeed, maxSpeed);
+            myRigidbody.velocity = actualSpeed * transform.forward;
+
+            ////WASD to move
+            //Vector3 inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            //myRigidbody.velocity = inputVector * speed;
+
+            //Ray rayFromCameraToCursor = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Plane playerPlane = new Plane(Vector3.up, transform.position);
+            //playerPlane.Raycast(rayFromCameraToCursor, out float distanceFromCamera);
+            //Vector3 cursorPosition = rayFromCameraToCursor.GetPoint(distanceFromCamera);
+
+            ////Face the new position
+            //Vector3 lookAtPosition = cursorPosition;
+            //transform.LookAt(lookAtPosition);
 
 
-    }
+        }
 
-    private void OnEnable()
-    {
-        //References.thePlayer = this;
+        private void OnEnable()
+        {
+            //References.thePlayer = this;
+        }
     }
 }

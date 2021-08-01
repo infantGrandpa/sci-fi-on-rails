@@ -13,3 +13,8 @@ https://gamedevbeginner.com/how-to-fade-audio-in-unity-i-tested-every-method-thi
 
 Crosshair
 Max Marrone
+
+Sound Effects
+Shield Overcharging Sound: plasterbrain (freesound.org)
+
+

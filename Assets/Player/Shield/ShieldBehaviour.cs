@@ -86,7 +86,10 @@ namespace Player
         private void OverchargeShield()
         {
             currentShieldValue = 0;
-            Instantiate(myOverchargeShape, transform.position + transform.forward, transform.rotation);
+            GameObject newOverchargeBlast = Instantiate(myOverchargeShape, transform.position + transform.forward, transform.rotation);
+            newOverchargeBlast.transform.parent = transform;
+
+            ResetShieldRechargeRate();
         }
     }
 }

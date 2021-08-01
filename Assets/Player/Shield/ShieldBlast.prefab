@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca4cdee6cd6fe9448d9e1b474e3a623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overchargeDamage: 3
+  overchargeDamage: 15
   startOverchargeScale: 0
   maxOverchargeScale: 25
   sizeIncreasePerSec: 40

@@ -6,6 +6,7 @@ public class HealthSystem : MonoBehaviour
 {
     [Header("General Health")]
     public float maxHealth;
+    [HideInInspector]
     public float currentHealth;
 
     [Header("Invincibility Frames")]
@@ -55,7 +56,7 @@ public class HealthSystem : MonoBehaviour
 
     public void Die()
     {
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
 }

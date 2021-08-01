@@ -36,6 +36,10 @@ namespace Player
         public float aimTargetDistance;
         public List<WeaponBehaviour> weaponList = new List<WeaponBehaviour>();
 
+        [Header("Aim Assist")]
+        public float aimAssistRadius;
+        public float aimAssistMaxDistance;
+
         [Header("Camera")]
         public Transform myCameraHolder;
         public CinemachineDollyCart myDolly;
@@ -50,6 +54,10 @@ namespace Player
         public AudioSource boostPunchNoise;
         public float boostFadeDuration;
         public float boostNoiseVolume;
+
+        [Header("Other")]
+        [Tooltip("Damage taken when running into a wall")]
+        public float wallDamage;
 
 
 
@@ -105,18 +113,29 @@ namespace Player
                 mySecondaryWeapon.ChargeAndFire(myAimTarget.position, true);
                 myShield.ResetShieldRechargeRate();
             }
+
             //Normal Shot
             else if (Input.GetButton("Fire1"))
             {
-                myPrimaryWeapon.ChargeAndFire(myAimTarget.position, true);
+                GameObject assistedTarget = AimAssist();
+                if (assistedTarget != null)
+                {
+                    myPrimaryWeapon.ChargeAndFire(assistedTarget.transform.position, true);
+                } else
+                {
+                    myPrimaryWeapon.ChargeAndFire(myAimTarget.position, true);
+                }
+                
                 myShield.ResetShieldRechargeRate();
             }
+
             //Charge Shield
             else if (Input.GetButton("Jump"))
             {
                 myShield.ChargeShield();
             }
 
+            //Reset Sheild Charge
             if (!Input.GetButton("Jump"))
             {
                 myShield.ReduceOvercharge();
@@ -140,13 +159,7 @@ namespace Player
             Brake(brakeValue);
             Boost(boostValue);
 
-
-
-
-
         }
-
-
 
         private void OnTriggerEnter(Collider other)
         {
@@ -155,7 +168,7 @@ namespace Player
             GameObject theirGameObject = other.gameObject;
             if (theirGameObject.CompareTag(References.wallsTag))
             {
-                bool damageDealt = myHealthSystem.TakeDamage(1);
+                bool damageDealt = myHealthSystem.TakeDamage(wallDamage);
                 if (damageDealt)
                 {
                     Debug.Log("Ship Crashed");
@@ -165,6 +178,21 @@ namespace Player
 
             }
         }
+
+        public GameObject AimAssist()
+        {
+            if (Physics.SphereCast(transform.position, aimAssistRadius, transform.forward, out RaycastHit nearestTarget, aimAssistMaxDistance, References.enemiesLayer))
+            {
+                if (nearestTarget.transform.gameObject.CompareTag(References.enemiesTag))
+                {
+                    Debug.Log(nearestTarget.transform.gameObject.name);
+                    return nearestTarget.transform.gameObject;
+                }
+            }
+
+            return null;
+        }
+
 
         private void SetLookRotation(float h, float v, float speed)
         {
@@ -321,6 +349,7 @@ namespace Player
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(rotationTarget.position, .5f);
             Gizmos.DrawSphere(rotationTarget.position, .15f);
+            
 
         }
 

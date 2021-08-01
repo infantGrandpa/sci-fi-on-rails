@@ -13,8 +13,13 @@ public static class References
     //Layer Masks
     public static LayerMask wallsLayer = LayerMask.GetMask("Walls and Props");
     public static LayerMask floorsLayer = LayerMask.GetMask("Floors");
+    public static LayerMask enemiesLayer = LayerMask.GetMask("Enemies");
 
     //Tags
     public static string wallsTag = "Walls and Props";
+    public static string enemiesTag = "Enemy";
+
+    //Variables
+    public static float maxLevelDistance = 6000;
 
 }

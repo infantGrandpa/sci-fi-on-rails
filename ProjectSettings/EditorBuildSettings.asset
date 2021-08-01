@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Startup.unity
+    guid: 7c0e8bd4c0c715a4ba3241a5db4da422
+  - enabled: 1
+    path: Assets/Scenes/OnRailsScene.unity
+    guid: 9813d74dfbc609d4986207c8e7a4173e
   m_configObjects: {}

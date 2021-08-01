@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Player;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -14,10 +15,12 @@ public class HealthSystem : MonoBehaviour
     public float secondsOfInvulnerability;
     private float secondsLeftOfInvulnerability;
 
+    private ShieldBehaviour myShield; 
+
     private void Start()
     {
         currentHealth = maxHealth;
-        
+        myShield = GetComponent<ShieldBehaviour>();
         
     }
 
@@ -35,8 +38,17 @@ public class HealthSystem : MonoBehaviour
         
         if ((invulnerableAfterDamage == false) || (secondsLeftOfInvulnerability <= 0))
         {
-            currentHealth -= damageAmount;
-            Debug.Log(damageAmount.ToString() + " damage taken.");
+            float damageLeftToDeal = damageAmount;
+
+            //Check if we have a shield. If we do, take from that first
+            if (myShield != null)
+            {
+                damageLeftToDeal = myShield.TakeShieldDamage(damageAmount);
+            }
+            
+            //Reduce Health
+            currentHealth -= damageLeftToDeal;
+            //Debug.Log(damageLeftToDeal.ToString() + " HP damage to " + gameObject.name);
             if (invulnerableAfterDamage)
             {
                 secondsLeftOfInvulnerability = secondsOfInvulnerability;

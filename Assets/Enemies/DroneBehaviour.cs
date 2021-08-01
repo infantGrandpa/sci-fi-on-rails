@@ -19,12 +19,18 @@ public class DroneBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Transform playerTransform = References.thePlayer.transform;
-        transform.LookAt(playerTransform);
-
-        if (Vector3.Distance(transform.position, playerTransform.position) <= weaponRange)
+        
+        if (References.thePlayer.transform != null)
         {
-            myWeapon.ChargeAndFire(playerTransform.position, true);
+            Transform playerTransform = References.thePlayer.transform;
+            transform.LookAt(playerTransform);
+            if (Vector3.Distance(transform.position, playerTransform.position) <= weaponRange)
+            {
+                myWeapon.ChargeAndFire(playerTransform.position, true);
+            }
         }
+        
+
+
     }
 }

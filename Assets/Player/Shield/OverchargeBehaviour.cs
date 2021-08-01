@@ -22,10 +22,12 @@ namespace Player
         public GameObject myParticlesObject;
         public GameObject myOpeningParticleObject;
 
+        private SphereCollider myCollider;
 
         // Start is called before the first frame update
         void Start()
         {
+            myCollider = GetComponent<SphereCollider>();
             currentOverchargeScale = startOverchargeScale;
         }
 
@@ -38,13 +40,15 @@ namespace Player
         private void OnTriggerEnter(Collider other)
         {
             GameObject theirGameObject = other.gameObject;
+            Debug.Log(theirGameObject.name);
             //Make sure we don't damage the player
-            if (!GameObject.ReferenceEquals(theirGameObject, References.thePlayer.gameObject))
+            if (!other.transform.IsChildOf(References.thePlayer.transform))
             {
                 //Damage anythign with a health system
                 HealthSystem theirHealthSystem = theirGameObject.GetComponentInParent<HealthSystem>();
                 if (theirHealthSystem != null)
                 {
+                    Debug.Log("Attempting to Damage " + theirGameObject.name);
                     theirHealthSystem.TakeDamage(overchargeDamage);
                 }
             }
@@ -55,7 +59,7 @@ namespace Player
             //Increase sphere scale
             currentOverchargeScale += sizeIncreasePerSec * Time.deltaTime;
             myLight.range = currentOverchargeScale * lightRangeMultiplier;
-
+            myCollider.radius = currentOverchargeScale / 2;
             //If greater than the max, end the overcharge attack
             if (currentOverchargeScale > maxOverchargeScale)
             {

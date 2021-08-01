@@ -91,5 +91,15 @@ namespace Player
 
             ResetShieldRechargeRate();
         }
+
+        public float TakeShieldDamage(float damageAmount)
+        {
+            //Take as much damage from the shield as we can
+            float damageToTake = Mathf.Min(damageAmount, currentShieldValue);
+            currentShieldValue -= damageToTake;
+            //Calculate and return what is left over
+            float damageLeftToTake = damageAmount - damageToTake;
+            return damageLeftToTake;
+        }
     }
 }

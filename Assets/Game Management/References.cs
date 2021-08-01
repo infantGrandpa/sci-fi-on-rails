@@ -9,6 +9,9 @@ public static class References
     public static CanvasBehaviour theCanvas;
     public static AccelerationBar theAccelerationBar;
     public static GameController theGameController;
+    public static EnemyRailsBehaviour theEnemyDolly;
+    public static LevelManager theLevelManager;
+    public static Persistent essentials;
 
     //Layer Masks
     public static LayerMask wallsLayer = LayerMask.GetMask("Walls and Props");

@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overchargeDamage: 15
   startOverchargeScale: 0
-  maxOverchargeScale: 25
-  sizeIncreasePerSec: 40
+  maxOverchargeScale: 15
+  sizeIncreasePerSec: 160
   myLight: {fileID: 6094190163325826443}
   lightIntensityIncreasePerSec: 7
   lightRangeMultiplier: 2

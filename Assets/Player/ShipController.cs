@@ -159,6 +159,9 @@ namespace Player
             Brake(brakeValue);
             Boost(boostValue);
 
+
+            References.theCanvas.ShowHealthFraction(myHealthSystem.currentHealth / myHealthSystem.maxHealth);
+
         }
 
         private void OnTriggerEnter(Collider other)
@@ -224,6 +227,10 @@ namespace Player
         private void SetDollySpeed(float speed)
         {
             myDolly.m_Speed = speed;
+            if (References.theEnemyDolly != null)
+            {
+                References.theEnemyDolly.setSpeed(speed);
+            }
         }
 
         private void Boost(bool state)
@@ -343,6 +350,11 @@ namespace Player
             Camera.main.GetComponent<PostProcessVolume>().profile.GetSetting<ChromaticAberration>().intensity.value = x;
         }
         */
+
+        private void OnDestroy()
+        {
+            References.thePlayer = null;
+        }
 
         private void OnDrawGizmos()
         {

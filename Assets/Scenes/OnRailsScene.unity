@@ -1671,6 +1671,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23783210443298100, guid: 765523142edb26b4ca6ab5bfe4dc501b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad8c6296654d9674bbad6b930da6b445, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 765523142edb26b4ca6ab5bfe4dc501b, type: 3}
 --- !u!1 &390811730 stripped
@@ -3994,6 +3998,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23783210443298100, guid: 765523142edb26b4ca6ab5bfe4dc501b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad8c6296654d9674bbad6b930da6b445, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 765523142edb26b4ca6ab5bfe4dc501b, type: 3}
 --- !u!1001 &1201181711
@@ -5724,54 +5732,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 982589106239866695, guid: 8a17074f543e30346a1c2447c3e390de, type: 3}
   m_PrefabInstance: {fileID: 125602450}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1947975389
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1947975391}
-  - component: {fileID: 1947975390}
-  m_Layer: 0
-  m_Name: OnRails Enemies (1)
-  m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1947975390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947975389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a9c787e5d1bbf48a389834c4a9641c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Path: {fileID: 0}
-  m_UpdateMethod: 0
-  m_PositionUnits: 1
-  m_Speed: 9
-  m_Position: 20
---- !u!4 &1947975391
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947975389}
-  m_LocalRotation: {x: -0.009446222, y: 0.037218798, z: 0.0003518365, w: 0.99926245}
-  m_LocalPosition: {x: -0.72855586, y: 2.0505505, z: 14.964482}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: -1.083, y: 4.33, z: 0}
 --- !u!4 &1959628041 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 982589106239866695, guid: 8a17074f543e30346a1c2447c3e390de, type: 3}
@@ -6363,14 +6323,14 @@ MonoBehaviour:
   aimAssistMaxDistance: 200
   myCameraHolder: {fileID: 1586094303}
   myDolly: {fileID: 1925057776}
-  rotationTarget: {fileID: 1464839442}
+  rotationTarget: {fileID: 1100784453}
   lookSpeed: 10000
   engineNoise: {fileID: 1588567499596204316}
   boostNoise: {fileID: 1588567499596204318}
   boostPunchNoise: {fileID: 1588567499596204319}
   boostFadeDuration: 0.4
   boostNoiseVolume: 0.3
-  wallDamage: 0
+  wallDamage: 10
 --- !u!54 &1588567499596204314
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6753,7 +6713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e530d8f490176f42afe9af7815baca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 50
   currentHealth: 0
   invulnerableAfterDamage: 1
   secondsOfInvulnerability: 3
@@ -7024,6 +6984,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OnRails Enemies
       objectReference: {fileID: 0}
+    - target: {fileID: 3257237268753401523, guid: 47c2856dcdaa8374eb1e5e700be86206, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5337636987547420986, guid: 47c2856dcdaa8374eb1e5e700be86206, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -7173,6 +7137,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 911771469547053592, guid: 1af4bfc44b4a76340929372e637e982b, type: 3}
+      propertyPath: sounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 911771469547053592, guid: 1af4bfc44b4a76340929372e637e982b, type: 3}
+      propertyPath: sounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 88d6c3818656c8c4a99f35fff9af6bab, type: 3}
+    - target: {fileID: 911771469547053592, guid: 1af4bfc44b4a76340929372e637e982b, type: 3}
+      propertyPath: sounds.Array.data[0].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 911771469547053592, guid: 1af4bfc44b4a76340929372e637e982b, type: 3}
+      propertyPath: sounds.Array.data[0].name
+      value: Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 911771469547053592, guid: 1af4bfc44b4a76340929372e637e982b, type: 3}
+      propertyPath: sounds.Array.data[0].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 911771469547053592, guid: 1af4bfc44b4a76340929372e637e982b, type: 3}
+      propertyPath: sounds.Array.data[0].volume
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1755737985894628795, guid: 1af4bfc44b4a76340929372e637e982b, type: 3}
       propertyPath: m_Name
       value: AudioManager

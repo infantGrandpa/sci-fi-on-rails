@@ -17,13 +17,15 @@ public class CanvasBehaviour : MonoBehaviour
 
     public void HoneInOnTarget(GameObject target, float percComplete)
     {
-        playerHomingRecticule.SetActive(true);
+        if (target != null)
+        {
+            playerHomingRecticule.SetActive(true);
 
-        //Move from the player's reticule to the enemy's postion
-        Vector2 startPosition = Camera.main.WorldToScreenPoint(References.thePlayer.myAimTarget.transform.position);
-        Vector2 enemyPosition = Camera.main.WorldToScreenPoint(target.transform.position);
-        playerHomingRecticule.transform.position = Vector2.Lerp(startPosition, enemyPosition, percComplete); 
-
+            //Move from the player's reticule to the enemy's postion
+            Vector2 startPosition = Camera.main.WorldToScreenPoint(References.thePlayer.myAimTarget.transform.position);
+            Vector2 enemyPosition = Camera.main.WorldToScreenPoint(target.transform.position);
+            playerHomingRecticule.transform.position = Vector2.Lerp(startPosition, enemyPosition, percComplete);
+        }
     }
 
     public void StopHone()

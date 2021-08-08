@@ -215,10 +215,10 @@ namespace Player
 
         private void ClampPosition()
         {
-            Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+            Vector3 pos = References.theCamera.WorldToViewportPoint(transform.position);
             pos.x = Mathf.Clamp01(pos.x);
             pos.y = Mathf.Clamp01(pos.y);
-            transform.position = Camera.main.ViewportToWorldPoint(pos);
+            transform.position = References.theCamera.ViewportToWorldPoint(pos);
         }
 
         private void HorizontalLean(Transform target, float axis, float leanLimit, float lerpTime)
@@ -342,7 +342,7 @@ namespace Player
         /*
         void DistortionAmount(float x)
         {
-            Camera.main.GetComponent<PostProcessVolume>().profile.GetSetting<LensDistortion>().intensity.value = x;
+            References.theCamera.GetComponent<PostProcessVolume>().profile.GetSetting<LensDistortion>().intensity.value = x;
         }
         void FieldOfView(float fov)
         {
@@ -350,7 +350,7 @@ namespace Player
         }
         void Chromatic(float x)
         {
-            Camera.main.GetComponent<PostProcessVolume>().profile.GetSetting<ChromaticAberration>().intensity.value = x;
+            References.theCamera.GetComponent<PostProcessVolume>().profile.GetSetting<ChromaticAberration>().intensity.value = x;
         }
         */
 

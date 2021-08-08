@@ -98,9 +98,12 @@ namespace Player
             float speedInput = Input.GetAxis("Speed");
 
             LocalMove(horizontalInput, verticalInput, xySpeed);
-            SetLookRotation(horizontalInput, verticalInput, lookSpeed);
+            //SetLookRotation(horizontalInput, verticalInput, lookSpeed);
             HorizontalLean(References.thePlayer.transform, horizontalInput, 80, .1f);
 
+            References.theCanvas.PrintToDebugOverlay(verticalInput.ToString(), 1);
+            References.theCanvas.PrintToDebugOverlay(horizontalInput.ToString(), 2);
+            References.theCanvas.PrintToDebugOverlay(speedInput.ToString(), 3);
 
             //Charged Shot
             if (Input.GetButton("Fire2"))

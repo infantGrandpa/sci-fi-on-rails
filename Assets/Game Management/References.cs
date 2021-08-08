@@ -9,6 +9,7 @@ public static class References
     public static CanvasBehaviour theCanvas;
     public static AccelerationBar theAccelerationBar;
     public static GameController theGameController;
+    public static Camera theCamera;
     public static EnemyRailsBehaviour theEnemyDolly;
     public static LevelManager theLevelManager;
     public static Persistent essentials;

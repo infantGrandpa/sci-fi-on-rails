@@ -34,7 +34,7 @@ namespace Player
             //Vector3 inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             //myRigidbody.velocity = inputVector * speed;
 
-            //Ray rayFromCameraToCursor = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Ray rayFromCameraToCursor = References.theCamera.ScreenPointToRay(Input.mousePosition);
             //Plane playerPlane = new Plane(Vector3.up, transform.position);
             //playerPlane.Raycast(rayFromCameraToCursor, out float distanceFromCamera);
             //Vector3 cursorPosition = rayFromCameraToCursor.GetPoint(distanceFromCamera);

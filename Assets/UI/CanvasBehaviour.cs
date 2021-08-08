@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CanvasBehaviour : MonoBehaviour
 {
@@ -22,14 +20,29 @@ public class CanvasBehaviour : MonoBehaviour
     public GameObject creditsMenu;
     public GameObject currentMenu;
 
-    [Header("Scenes")]
-    public SceneAsset firstScene;
+    [Header("Debug")]
+    [SerializeField]
+    private bool showDebugOverlay;
+    [SerializeField]
+    private GameObject debugOverlay;
+    [SerializeField]
+    private TMP_Text debugText1;
+    [SerializeField]
+    private TMP_Text debugText2;
+    [SerializeField]
+    private TMP_Text debugText3;
+    [SerializeField]
+    private TMP_Text debugText4;
 
     private void OnEnable()
     {
         References.theCanvas = this;
     }
 
+    private void Start()
+    {
+        ShowDebugOverlay();
+    }
 
     void Update()
     {
@@ -44,6 +57,36 @@ public class CanvasBehaviour : MonoBehaviour
                 ShowMenu(mainMenu);
             }
         }
+
+        if (Input.GetButtonDown("Enable Debug Button 1"))
+        {
+            showDebugOverlay = !showDebugOverlay;
+            ShowDebugOverlay();
+        }
+
+    }
+
+    public void PrintToDebugOverlay(string textToPrint, int debugTextObjectNum)
+    {
+        TMP_Text targetTextObject = debugText1;
+        switch (debugTextObjectNum)
+        {
+            case 2:
+                targetTextObject = debugText2;
+                break;
+            case 3:
+                targetTextObject = debugText3;
+                break;
+            case 4:
+                targetTextObject = debugText4;
+                break;
+        }
+        targetTextObject.text = textToPrint;
+    }
+
+    private void ShowDebugOverlay()
+    {
+        debugOverlay.SetActive(showDebugOverlay);
     }
 
     public void ShowMainMenu()
@@ -76,7 +119,7 @@ public class CanvasBehaviour : MonoBehaviour
     public void StartNewGame()
     {
         HideMenu();
-        SceneManager.LoadScene(firstScene.name);
+        SceneManager.LoadScene("OnRailsScene");
     }
 
     public void Quit()
@@ -93,8 +136,8 @@ public class CanvasBehaviour : MonoBehaviour
             playerHomingRecticule.SetActive(true);
 
             //Move from the player's reticule to the enemy's postion
-            Vector2 startPosition = Camera.main.WorldToScreenPoint(References.thePlayer.myAimTarget.transform.position);
-            Vector2 enemyPosition = Camera.main.WorldToScreenPoint(target.transform.position);
+            Vector2 startPosition = References.theCamera.WorldToScreenPoint(References.thePlayer.myAimTarget.transform.position);
+            Vector2 enemyPosition = References.theCamera.WorldToScreenPoint(target.transform.position);
             playerHomingRecticule.transform.position = Vector2.Lerp(startPosition, enemyPosition, percComplete);
         }
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    
+
     private void OnEnable()
     {
         References.theGameController = this;
@@ -38,21 +40,6 @@ public class GameController : MonoBehaviour
     }
     
 
-
-    //private void FindGameObjectsWithLayer(layer : int) : GameObject[] {
-    //    var goArray = FindObjectsOfType(GameObject);
-    //var goList = new System.Collections.Generic.List.< GameObject > ();
-    //    for (var i = 0; i<goArray.Length; i++) {
-    //        if (goArray[i].layer == layer) {
-    //            goList.Add(goArray[i]);
-    //        }
-    //    }
-    //    if (goList.Count == 0)
-    //{
-    //return null;
-    //}
-    //return goList.ToArray();
-    //} 
 
 
     public void PrefsSetBool(string keyName, bool value)

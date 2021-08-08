@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OnRailsScene.unity
     guid: 9813d74dfbc609d4986207c8e7a4173e
+  - enabled: 1
+    path: Assets/Scenes/NonLoopScene.unity
+    guid: 2701f74d313f370408ddfa99b9b42064
   m_configObjects: {}

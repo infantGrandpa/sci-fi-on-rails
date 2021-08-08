@@ -1,20 +1,27 @@
 Flying Controls in Unity - Tutorial: gamesplusjames (not currently used)
 
-Star Fox's Rail Movement | Mix and Jam on YouTube
+"Star Fox's Rail Movement"
+Mix and Jam on YouTube
 https://www.youtube.com/watch?v=JVbr7osMYTo&ab_channel=MixandJam
 
 3D Assets: Synty Store
 
-Animation Code
+Animation Tweening Code
 DOTween
 
 Audio Fade
+John French (gamedevbeginner.com)
 https://gamedevbeginner.com/how-to-fade-audio-in-unity-i-tested-every-method-this-ones-the-best/#second_method
 
 Crosshair
 Max Marrone
 
-Sound Effects
-Shield Overcharging Sound: plasterbrain (freesound.org)
+
+Most Sound Effects
+fusehive
+
+Music
+Scythuz Music
+
 
 

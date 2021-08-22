@@ -10,9 +10,15 @@ namespace Player
     public class ShipController : MonoBehaviour
     {
 
-        [Header("General Speed")]
+        [Header("Movement")]
         public float xySpeed;
         public float forwardSpeed;
+        public Transform rotationTarget;
+        public float lookSpeed;
+        public float lookDistance;
+        [Range(0.0f, 90.0f)]
+        public float horizontalLeanLimit;
+        public float horizontalLeanLerpTime;
 
         [Header("Braking")]
         public float brakeSpeed;
@@ -32,7 +38,8 @@ namespace Player
         [Header("Weapons")]
         public WeaponBehaviour myPrimaryWeapon;
         public WeaponBehaviour mySecondaryWeapon;
-        public Transform myAimTarget;
+        public Transform myAimTargetFront;
+        public Transform myAimTargetBack;
         public float aimTargetDistance;
         public List<WeaponBehaviour> weaponList = new List<WeaponBehaviour>();
 
@@ -43,10 +50,6 @@ namespace Player
         [Header("Camera")]
         public Transform myCameraHolder;
         public CinemachineDollyCart myDolly;
-
-        [Header("Rotation")]
-        public Transform rotationTarget;
-        public float lookSpeed;
 
         [Header("Sounds")]
         public AudioSource engineNoise;
@@ -77,7 +80,7 @@ namespace Player
         private void Start()
         {
             DOTween.SetTweensCapacity(2000, 100);
-            SetDollySpeed(forwardSpeed);
+            SetDollySpeed(forwardSpeed);    
             engineNoise.Play();
             boostNoise.volume = 0;
             invertVertical = References.theGameController.PrefsGetBool("invertVertical");
@@ -99,21 +102,22 @@ namespace Player
 
             LocalMove(horizontalInput, verticalInput, xySpeed);
             SetLookRotation(horizontalInput, verticalInput, lookSpeed);
-            HorizontalLean(References.thePlayer.transform, horizontalInput, 80, .1f);
+            HorizontalLean(References.thePlayer.transform, horizontalInput, horizontalLeanLimit, horizontalLeanLerpTime);
 
             References.theCanvas.PrintToDebugOverlay(verticalInput.ToString(), 1);
             References.theCanvas.PrintToDebugOverlay(horizontalInput.ToString(), 2);
             References.theCanvas.PrintToDebugOverlay(speedInput.ToString(), 3);
 
+            
             //Charged Shot
             if (Input.GetButton("Fire2"))
             {
-                mySecondaryWeapon.ChargeAndFire(myAimTarget.position, false);
+                mySecondaryWeapon.ChargeAndFire(myAimTargetFront.position, false);
                 myShield.ResetShieldRechargeRate();
             }
             else if (Input.GetButtonUp("Fire2"))
             {
-                mySecondaryWeapon.ChargeAndFire(myAimTarget.position, true);
+                mySecondaryWeapon.ChargeAndFire(myAimTargetFront.position, true);
                 myShield.ResetShieldRechargeRate();
             }
 
@@ -126,7 +130,7 @@ namespace Player
                     myPrimaryWeapon.ChargeAndFire(assistedTarget.transform.position, true);
                 } else
                 {
-                    myPrimaryWeapon.ChargeAndFire(myAimTarget.position, true);
+                    myPrimaryWeapon.ChargeAndFire(myAimTargetFront.position, true);
                 }
                 
                 myShield.ResetShieldRechargeRate();
@@ -161,8 +165,9 @@ namespace Player
 
             Brake(brakeValue);
             Boost(boostValue);
-
-            References.theCanvas.ShowTargettingReticule(myAimTarget);
+            
+            References.theCanvas.ShowTargettingReticule(References.theCanvas.playerFrontAimingReticule, myAimTargetFront);
+            References.theCanvas.ShowTargettingReticule(References.theCanvas.playerBackAimingReticule, myAimTargetBack);
             References.theCanvas.ShowHealthFraction(myHealthSystem.currentHealth / myHealthSystem.maxHealth);
 
         }
@@ -203,8 +208,11 @@ namespace Player
         private void SetLookRotation(float h, float v, float speed)
         {
             rotationTarget.parent.position = Vector3.zero;
-            rotationTarget.localPosition = new Vector3(h, v, 1);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(rotationTarget.position), Mathf.Deg2Rad * speed * Time.deltaTime);
+            rotationTarget.localPosition = new Vector3(h, v, lookDistance);
+            Quaternion targetRotation = Quaternion.LookRotation(rotationTarget.position);
+            var step = speed * Time.deltaTime;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+            References.theCanvas.PrintToDebugOverlay(step.ToString(), 4);
         }
 
         private void LocalMove(float x, float y, float speed)
@@ -224,6 +232,8 @@ namespace Player
         private void HorizontalLean(Transform target, float axis, float leanLimit, float lerpTime)
         {
             Vector3 targetEulerAngels = target.localEulerAngles;
+            
+
             target.localEulerAngles = new Vector3(targetEulerAngels.x, targetEulerAngels.y, Mathf.LerpAngle(targetEulerAngels.z, -axis * leanLimit, lerpTime));
         }
 
@@ -315,7 +325,7 @@ namespace Player
                 gos = GameObject.FindGameObjectsWithTag("Enemy");
                 GameObject closest = null;
                 float distance = Mathf.Infinity;
-                Vector3 position = myAimTarget.transform.position;
+                Vector3 position = myAimTargetFront.transform.position;
                 foreach (GameObject go in gos)
                 {
                     Vector3 diff = go.transform.position - position;

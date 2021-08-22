@@ -10,7 +10,8 @@ public class CanvasBehaviour : MonoBehaviour
     public Image playerHealthFilled;
 
     [Header("Aiming")]
-    public GameObject playerAimingReticule;
+    public GameObject playerFrontAimingReticule;
+    public GameObject playerBackAimingReticule;
     public GameObject playerHomingRecticule;
 
     [Header("Shield")]
@@ -36,7 +37,8 @@ public class CanvasBehaviour : MonoBehaviour
     [SerializeField]
     private TMP_Text debugText4;
 
-
+    [Header("Score")]
+    public TMP_Text scoreText;
 
 
     private void OnEnable()
@@ -141,7 +143,7 @@ public class CanvasBehaviour : MonoBehaviour
             playerHomingRecticule.SetActive(true);
 
             //Move from the player's reticule to the enemy's postion
-            Vector2 startPosition = References.theCamera.WorldToScreenPoint(References.thePlayer.myAimTarget.transform.position);
+            Vector2 startPosition = References.theCamera.WorldToScreenPoint(References.thePlayer.myAimTargetFront.transform.position);
             Vector2 enemyPosition = References.theCamera.WorldToScreenPoint(target.transform.position);
             playerHomingRecticule.transform.position = Vector2.Lerp(startPosition, enemyPosition, percComplete);
         }
@@ -171,9 +173,9 @@ public class CanvasBehaviour : MonoBehaviour
         playerHealthFilled.rectTransform.localScale = new Vector3(1, fraction, 1);
     }
 
-    public void ShowTargettingReticule(Transform target)
+    public void ShowTargettingReticule(GameObject reticule, Transform target)
     {
-        playerAimingReticule.transform.position = References.theCamera.WorldToScreenPoint(target.position);
+        reticule.transform.position = References.theCamera.WorldToScreenPoint(target.position);
     }
 
 }

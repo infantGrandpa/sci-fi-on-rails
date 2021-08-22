@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    
+    private int currentScore;
 
     private void OnEnable()
     {
@@ -14,6 +14,11 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         SetWallsToTrigger();
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void SetWallsToTrigger()
@@ -39,7 +44,11 @@ public class GameController : MonoBehaviour
         }
     }
     
-
+    public void IncreaseScore(int increaseBy)
+    {
+        currentScore += increaseBy;
+        References.theCanvas.scoreText.text = currentScore.ToString();
+    }
 
 
     public void PrefsSetBool(string keyName, bool value)

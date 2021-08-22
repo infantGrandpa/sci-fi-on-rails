@@ -15,12 +15,13 @@ public class HealthSystem : MonoBehaviour
     public float secondsOfInvulnerability;
     private float secondsLeftOfInvulnerability;
 
-    private ShieldBehaviour myShield; 
-
+    private ShieldBehaviour myShield;
+    private ScoreSystem myScoreSystem;
     private void Start()
     {
         currentHealth = maxHealth;
         myShield = GetComponent<ShieldBehaviour>();
+        myScoreSystem = GetComponent<ScoreSystem>();
         
     }
 
@@ -68,6 +69,10 @@ public class HealthSystem : MonoBehaviour
 
     public void Die()
     {
+        if (myScoreSystem != null)
+        {
+            myScoreSystem.IncreasePlayerScore();
+        }
         Destroy(gameObject);
     }
 

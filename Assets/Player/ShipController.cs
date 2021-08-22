@@ -98,7 +98,7 @@ namespace Player
             float speedInput = Input.GetAxis("Speed");
 
             LocalMove(horizontalInput, verticalInput, xySpeed);
-            //SetLookRotation(horizontalInput, verticalInput, lookSpeed);
+            SetLookRotation(horizontalInput, verticalInput, lookSpeed);
             HorizontalLean(References.thePlayer.transform, horizontalInput, 80, .1f);
 
             References.theCanvas.PrintToDebugOverlay(verticalInput.ToString(), 1);
@@ -162,7 +162,7 @@ namespace Player
             Brake(brakeValue);
             Boost(boostValue);
 
-
+            References.theCanvas.ShowTargettingReticule(myAimTarget);
             References.theCanvas.ShowHealthFraction(myHealthSystem.currentHealth / myHealthSystem.maxHealth);
 
         }

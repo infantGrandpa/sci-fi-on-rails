@@ -9,9 +9,11 @@ public class CanvasBehaviour : MonoBehaviour
     public Image playerHealthBar;
     public Image playerHealthFilled;
 
+    [Header("Aiming")]
+    public GameObject playerAimingReticule;
+    public GameObject playerHomingRecticule;
 
     [Header("Shield")]
-    public GameObject playerHomingRecticule;
     public Image playerRegularShieldBar;
     public Image playerOverchargeShieldBar;
 
@@ -33,6 +35,9 @@ public class CanvasBehaviour : MonoBehaviour
     private TMP_Text debugText3;
     [SerializeField]
     private TMP_Text debugText4;
+
+
+
 
     private void OnEnable()
     {
@@ -164,6 +169,11 @@ public class CanvasBehaviour : MonoBehaviour
     public void ShowHealthFraction(float fraction)
     {
         playerHealthFilled.rectTransform.localScale = new Vector3(1, fraction, 1);
+    }
+
+    public void ShowTargettingReticule(Transform target)
+    {
+        playerAimingReticule.transform.position = References.theCamera.WorldToScreenPoint(target.position);
     }
 
 }
